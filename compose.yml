@@ -1,0 +1,139 @@
+version: '3.8'
+
+services:
+  consumer-dsc:
+    container_name: consumer-dsc
+    build:
+      context: ../ptx-dataspace-connector
+      dockerfile: docker/app/Dockerfile
+      args:
+        ENV: development
+    image: consumer-dsc:latest
+    tty: true
+    volumes:
+      - ../ptx-dataspace-connector/src:/usr/src/app/src
+      - ./connector-config.json:/usr/src/app/src/config.development.json
+    ports:
+      - "3021:3000"
+    links:
+      - mongodb
+    networks:
+      - ptx
+      - ptx-inner
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/consumer-dsc
+      - NODE_ENV=development
+      - PORT=3000
+      - SESSION_SECRET=abc
+      - SESSION_COOKIE_EXPIRATION=24000
+      - CURATOR=https://visionspol.eu
+      - MAINTAINER=https://visionspol.eu
+      - WINSTON_LOGS_MAX_FILES=14d
+      - WINSTON_LOGS_MAX_SIZE=20m
+
+  provider-dsc:
+    container_name: provider-dsc
+    build:
+      context: ../ptx-dataspace-connector
+      dockerfile: docker/app/Dockerfile
+      args:
+        ENV: development
+    image: provider-dsc:latest
+    tty: true
+    volumes:
+      - ../ptx-dataspace-connector/src:/usr/src/app/src
+      - ./connector-config.json:/usr/src/app/src/config.development.json
+    ports:
+      - "3011:3000"
+    links:
+      - mongodb
+    networks:
+      - ptx
+      - ptx-inner
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/provider-dsc
+      - NODE_ENV=development
+      - PORT=3000
+      - SESSION_SECRET=abc
+      - SESSION_COOKIE_EXPIRATION=24000
+      - CURATOR=https://visionspol.eu
+      - MAINTAINER=https://visionspol.eu
+      - WINSTON_LOGS_MAX_FILES=14d
+      - WINSTON_LOGS_MAX_SIZE=20m
+  
+  catalog-api:
+    container_name: catalog-api
+    build:
+      context: ../ptx-catalog-api
+      dockerfile: docker/app/Dockerfile
+    image: catalog-api:latest
+    ports:
+      - "4040:4040"
+    networks:
+      - ptx
+      - ptx-inner
+    environment:
+      - NODE_ENV=development
+      - PORT=4040
+      - API_URL=http://catalog-api:4040/v1
+      - JWT_SECRET_KEY=abc123
+      - SALT_ROUNDS=10
+      - CONTRACT_SERVICE_ENDPOINT=http://contract-manager:8888
+      - MONGO_PORT=27017
+      - MONGO_HOST=mongodb
+      - MONGO_DATABASE=catalog
+
+  contract-manager:
+    container_name: "contract-manager"
+    build:
+      context: ../ptx-contract-manager
+      dockerfile: docker/app/Dockerfile
+    image: contract-manager:latest
+    ports:
+      - 8888:8888
+    links:
+      - mongodb
+    networks:
+      - ptx
+      - ptx-inner
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/contracts
+      - SERVER_PORT=8888
+
+  mongodb:
+    container_name: "mongodb"
+    build:
+      context: ../ptx-dataspace-connector
+      dockerfile: docker/mongodb/Dockerfile
+    image: mongodb:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - ptx
+      - ptx-inner
+
+  helper-app:
+    container_name: helper-app
+    build:
+      context: ./helper-app
+      dockerfile: docker/app/Dockerfile
+    image: helper-app:latest
+    ports:
+      - "3001:3000"
+    links:
+      - mongodb
+    networks:
+      - ptx
+      - ptx-inner
+    environment:
+      - DATABASE_URI=mongodb://mongodb:27017/moodle-log
+      - CATALOG_DATABASE_URI=mongodb://mongodb:27017/catalog
+      - PORT=3000
+
+networks:
+  ptx-inner:
+    external: false
+  ptx:
+    external: true
+
+
