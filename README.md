@@ -2,7 +2,7 @@
 
 This repository helps to set up a basic Prometheus-X environment. It contains a Postman collection and environment to set up and run the exchange.
 
-The demo is based on the **B2B, consumer-side triggered exchange**. Please note, this demo **does not include policies or consent handling**.
+The demo is based on the **B2B exchange, triggered by the consumer** (the exchange can be triggered by both sides). Please note, this demo **does not include policies or consent handling**.
 
 ## Setup dataspace environment
 
@@ -31,12 +31,12 @@ git clone -b demo-exchange https://github.com/botondklenk/ptx-dataspace-connecto
 
 #### Catalog API
 ```bash
-git clone -b demo-exchange https://github.com/botondklenk/ptx-catlog-api.git
+git clone -b demo-exchange https://github.com/botondklenk/ptx-catalog-api.git
 ```
 
 #### Contract Manager
 ```bash
-git clone -b demo-exchange https://github.com/botondklenk/ptx-contarct-manager.git
+git clone -b demo-exchange https://github.com/botondklenk/ptx-contract-manager.git
 ```
 
 ### Changes in the Repositories
@@ -60,7 +60,7 @@ docker compose up -d
 ```
 
 > **Note**:  
-> If you're using WSL on Windows, you may need to change the line endings of the `ptx-dataspace-connector/docker/scripts/start.sh` script to LF.
+> If you're using Docker on Windows, you may need to change the line endings of the `ptx-dataspace-connector/docker/scripts/start.sh` script to LF.
 
 ### Services
 
@@ -75,7 +75,10 @@ The following services will be started:
 
 ## Postman Collection
 
-In the `postman` directory, you can find a Postman collection and environment to interact with the services. You can import these files into Postman to start using the collection.
+In the `postman` directory, you can find a Postman collection and environment to interact with the services. You can import these files into a Postman workspace to run the collection.
+
+> **Note**:  
+> You need to select the enviroment in the top right corner.
 
 ### Collection Overview
 
