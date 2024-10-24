@@ -119,6 +119,10 @@ The Postman collection includes the following main sections:
 
 Each request is pre-configured with necessary scripts to automate the setup and interaction with the services.
 
+### Exchange Flow
+
+![Exchange Flow](./figures/exchange-simple.png)
+
 
 
 
