@@ -56,6 +56,7 @@ After cloning the repositories, navigate to the `ptx-demo-exchange` directory an
 ```bash
 cd ptx-demo-exchange
 docker compose build
+docker network create ptx
 docker compose up -d
 ```
 
