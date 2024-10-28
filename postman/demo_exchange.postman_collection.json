@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d9fdf6c4-0e91-412b-a558-b1821d79884b",
+		"_postman_id": "a5c715a7-0a02-4f09-a209-44e342a11365",
 		"name": "demo exchange",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15736626"
@@ -207,7 +207,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"resourceID\": \"{{providerDataResourceId}}\",\r\n    \"url\": \"http://host.docker.internal:3001/data\",\r\n    \"credential\": \"\"\r\n}",
+							"raw": "{\r\n    \"resourceID\": \"{{providerDataResourceId}}\",\r\n    \"url\": \"http://helper-app:3000/data\",\r\n    \"credential\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -462,7 +462,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"resourceID\": \"{{consumerSoftwareResourceId}}\",\r\n    \"url\": \"http://host.docker.internal:3001/data\",\r\n    \"credential\": \"\"\r\n}",
+							"raw": "{\r\n    \"resourceID\": \"{{consumerSoftwareResourceId}}\",\r\n    \"url\": \"http://helper-app:3000/data\",\r\n    \"credential\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -625,7 +625,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"endpoint\": \"http://host.docker.internal:3011/\",\r\n    \"secretKey\": \"{{providerServiceSecretKey}}\",\r\n    \"serviceKey\": \"{{providerServiceKey}}\",\r\n    \"catalogUri\": \"http://host.docker.internal:4040/v1/\",\r\n    \"consentUri\": \"http://host.docker.internal:3000/\",\r\n    \"contractUri\": \"http://host.docker.internal:8888/\"\r\n}",
+							"raw": "{\r\n    \"endpoint\": \"http://provider-dsc:3000/\",\r\n    \"secretKey\": \"{{providerServiceSecretKey}}\",\r\n    \"serviceKey\": \"{{providerServiceKey}}\",\r\n    \"catalogUri\": \"http://catalog-api:4040/v1/\",\r\n    \"consentUri\": \"http://example:0000/\",\r\n    \"contractUri\": \"http://contract-manager:8888/\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -792,7 +792,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"endpoint\": \"http://host.docker.internal:3021/\",\n    \"secretKey\": \"{{consumerServiceSecretKey}}\",\n    \"serviceKey\": \"{{consumerServiceKey}}\",\n    \"catalogUri\": \"http://host.docker.internal:4040/v1/\",\n    \"consentUri\": \"http://host.docker.internal:3000/\",\n    \"contractUri\": \"http://host.docker.internal:8888/\"\n}",
+							"raw": "{\n    \"endpoint\": \"http://consumer-dsc:3000/\",\n    \"secretKey\": \"{{consumerServiceSecretKey}}\",\n    \"serviceKey\": \"{{consumerServiceKey}}\",\n    \"catalogUri\": \"http://catalog-api:4040/v1/\",\n    \"consentUri\": \"http://example:0000/\",\n    \"contractUri\": \"http://contract-manager:8888/\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -919,7 +919,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contract\": {\r\n        \"serviceOfferings\": [\r\n            {\r\n                \"participant\": \"http://host.docker.internal:3011\",\r\n                \"serviceOffering\": \"http://host.docker.internal:4040/v1/serviceofferings/{{providerServiceOfferingId}}\",\r\n                \"policies\": []\r\n            },\r\n            {\r\n                \"participant\": \"http://host.docker.internal:3021\",\r\n                \"serviceOffering\": \"http://host.docker.internal:4040/v1/serviceofferings/{{consumerServiceOfferingId}}\",\r\n                \"policies\": []\r\n            }\r\n        ],\r\n        \"rolesAndObligations\": [],\r\n        \"dataProcessings\": [],\r\n        \"purpose\": [],\r\n        \"members\": [],\r\n        \"revokedMembers\": [],\r\n        \"status\": \"signed\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"contract\": {\r\n        \"serviceOfferings\": [\r\n            {\r\n                \"participant\": \"http://provider-dsc:3000/\",\r\n                \"serviceOffering\": \"http://catalog-api:4040/v1/serviceofferings/{{providerServiceOfferingId}}\",\r\n                \"policies\": []\r\n            },\r\n            {\r\n                \"participant\": \"http://consumer-dsc:3000/\",\r\n                \"serviceOffering\": \"http://catalog-api:4040/v1/serviceofferings/{{consumerServiceOfferingId}}\",\r\n                \"policies\": []\r\n            }\r\n        ],\r\n        \"rolesAndObligations\": [],\r\n        \"dataProcessings\": [],\r\n        \"purpose\": [],\r\n        \"members\": [],\r\n        \"revokedMembers\": [],\r\n        \"status\": \"signed\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -996,7 +996,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"contract\": \"http://host.docker.internal:8888/contracts/{{contractId}}\",\r\n    \"purposeId\": \"http://host.docker.internal:4040/v1/serviceofferings/{{consumerServiceOfferingId}}\",\r\n    \"resourceId\": \"http://host.docker.internal:4040/v1/serviceofferings/{{providerServiceOfferingId}}\",\r\n    \"resources\": [\r\n        {\r\n            \"resource\": \"{{providerDataResourceId}}\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"contract\": \"http://contract-manager:8888/contracts/{{contractId}}\",\r\n    \"purposeId\": \"http://catalog-api:4040/v1/serviceofferings/{{consumerServiceOfferingId}}\",\r\n    \"resourceId\": \"http://catalog-api:4040/v1/serviceofferings/{{providerServiceOfferingId}}\",\r\n    \"resources\": [\r\n        {\r\n            \"resource\": \"{{providerDataResourceId}}\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
