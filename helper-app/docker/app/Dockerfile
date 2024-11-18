@@ -1,20 +1,16 @@
-# Use the official Node.js image as the base image
-FROM node:lts
-
-# Set the working directory inside the container
+FROM node:lts AS dependencies
 WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
+RUN npm config set registry https://registry.npmjs.org/ && npm install
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code to the working directory
+FROM dependencies AS builder
 COPY . .
+RUN npm run build
 
-# Ensure necessary permissions
-RUN chown -R node:node /usr/src/app
+FROM node:lts-slim AS production
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=dependencies /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/package.json ./
 
-# Command to run the application
-CMD ["sh", "-c", "npm run build && npm run start"]
+CMD ["node", "dist/src/index.js"]
