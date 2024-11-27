@@ -74,6 +74,8 @@ The following services will be started:
 - **mongodb**: A shared MongoDB instance for simplicity.
 - **helper-app**: A helper application for additional functionalities. The main purpose is to imitate the data source and the data consumer.
 
+![Exchange Flow](./figures/demo-environment.svg)
+
 ## Postman Collection
 
 In the `postman` directory, you can find a Postman collection and environment to interact with the services. You can import these files into a Postman workspace to run the collection.
