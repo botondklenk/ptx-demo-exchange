@@ -76,6 +76,9 @@ The following services will be started:
 
 ![Exchange Flow](./figures/demo-environment.svg)
 
+> **Note**:  
+> After starting the services you can see the APIs as swagger UIs on the url:port/docs endpoint.
+> 
 ## Postman Collection
 
 In the `postman` directory, you can find a Postman collection and environment to interact with the services. You can import these files into a Postman workspace to run the collection.
